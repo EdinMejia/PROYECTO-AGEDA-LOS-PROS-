@@ -1,4 +1,4 @@
-# PROYECTO DE LA AGENDA 
+# Proyecto de Agenda de Contactos Inteligente 
 
 Este es el primer proyecto que se realizara en el curso de Estructuras de datos 
 
