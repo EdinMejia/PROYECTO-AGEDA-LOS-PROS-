@@ -3,10 +3,14 @@
 Este es el primer proyecto que se realizara en el curso de Estructuras de datos 
 
 Cumplira con las funcionalidades de 
-1- Agregar 
-2- Buscar
-3- Editar
-4- Eliminar
+1- Agregar, 
+
+2- Buscar, 
+
+3- Editar, 
+
+4- Eliminar, 
+
 5- Ordenar = ALfabeto o Reciente
 
 Extra: 
