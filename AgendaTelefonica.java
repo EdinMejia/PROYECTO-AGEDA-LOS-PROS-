@@ -15,7 +15,7 @@ public class MenudeOpciones {
             System.out.println("\n 5- Eliminar contacto ");
             System.out.println("\n 6- Exportar a .txt ");
             System.out.println("\n 7- Salir ");
-            System.out.println("\n Seleccione opcion:  ");
+            System.out.println("\n Seleccione solo una opcion:  ");
             int opcion = sc.nextInt(); sc.nextInt();
             
             
