@@ -1,5 +1,16 @@
 import java.io.*; 
 import java.util.*;
+// clase no nodo de lista enlazada 
+class Nodo_de_lista_enlazada {// Declaramos la clase Nodo_de_lista_enlazada
+    Contacto contacto;        // guardamos el contacto 
+    Nodo_de_lista_enlazada siguiente;
+
+    public Nodo_de_lista_enlazada(Contacto contacto) {
+        contacto = contacto;  // asigna el contacto al nodo 
+        siguiente = null;     
+    }
+}
+
 // clase exportador a txt 
 class Exportador { // Declaramos la clase llamada Exportador
         public static void exportarAArchivo(List<Contacto> contactos, String nombreArchivo) {
