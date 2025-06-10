@@ -1,8 +1,7 @@
 import java.io.*; 
 import java.util.*;
 
-// clase principal menu 
-
+// menu opciones: 
 public class AgendaContacto {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -14,7 +13,7 @@ public class AgendaContacto {
                 System.out.println("1. Agregar contacto");
                 System.out.println("2. Buscar por nombre");
                 System.out.println("3. Buscar por correo/teléfono");
-                System.out.println("4. Editar contacto");
+                System.out.println("4. Ajustes: Editar contacto");
                 System.out.println("5. Eliminar contacto");
                 System.out.println("6. Exportar a archivo");
                 System.out.println("7. Salir");
@@ -59,7 +58,7 @@ public class AgendaContacto {
                         if (editar.isEmpty()) {
                             System.out.println("Contacto no encontrado.");
                         } else {
-                            Contacto c3 = editar.get(0); // Editar el primero que coincida
+                            Contacto c3 = editar.get(0); 
                             System.out.print("Nuevo teléfono: ");
                             c3.setTelefono(sc.nextLine());
                             System.out.print("Nuevo correo: ");
