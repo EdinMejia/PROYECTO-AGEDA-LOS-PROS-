@@ -66,3 +66,28 @@ public class ListaEnlazada {
         }
     }
 }
+
+// Cifrado Cesar java
+public class CifradoCesar {
+    public static String cifrar(String texto, int desplazamiento) {
+        StringBuilder cifrado = new StringBuilder();
+        for (char c : texto.toCharArray()) {
+            if (Character.isLetter(c)) {
+                char base = Character.isLowerCase(c) ? 'a' : 'A';
+                c = (char)((c - base + desplazamiento) % 26 + base);
+            }
+            cifrado.append(c);
+        }
+        return cifrado.toString();
+    }
+
+    public static Contacto cifrarContacto(Contacto c, int desplazamiento) {
+        return new Contacto(
+            cifrar(c.nombre, desplazamiento),
+            cifrar(c.correo, desplazamiento),
+            cifrar(c.direccion, desplazamiento),
+            cifrar(c.telefono, desplazamiento)
+        );
+    }
+}
+
