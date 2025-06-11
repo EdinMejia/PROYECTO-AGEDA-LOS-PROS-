@@ -9,21 +9,26 @@ public class AgendaContacto {
 
         while (true) {
             try {
-                System.out.println("\nAgenda de Contactos");
+                System.out.println("\n===============================");
+                System.out.println("     AGENDA DE CONTACTOS");
+                System.out.println("===============================");
                 System.out.println("1. Agregar contacto");
                 System.out.println("2. Buscar por nombre");
                 System.out.println("3. Buscar por correo/teléfono");
-                System.out.println("4. Ajustes: Editar contacto");
+                System.out.println("4. Editar contacto");
                 System.out.println("5. Eliminar contacto");
                 System.out.println("6. Exportar a archivo");
                 System.out.println("7. Salir");
-                System.out.println("8. Mostrar contactos ordenados por nombre");
-                System.out.print("Opción: ");
+                System.out.println("8. Mostrar contactos ordenados");
+                System.out.print("Seleccione una opción: ");
 
                 int opcion = Integer.parseInt(sc.nextLine());
 
+                System.out.println("\n--------------------------------");
+
                 switch (opcion) {
                     case 1:
+                        System.out.println(">> Agregar nuevo contacto");
                         System.out.print("Nombre completo: ");
                         String nombre = sc.nextLine();
                         System.out.print("Teléfono: ");
@@ -34,61 +39,94 @@ public class AgendaContacto {
                         String dir = sc.nextLine();
                         agenda.agregar(new Contacto(nombre, tel, mail, dir));
                         break;
+
                     case 2:
                         System.out.print("Buscar por nombre (completo o parcial): ");
                         List<Contacto> encontrados = agenda.buscarPorNombre(sc.nextLine());
                         if (encontrados.isEmpty()) {
                             System.out.println("No se encontraron contactos.");
                         } else {
+                            System.out.println("Resultados encontrados:");
                             for (Contacto c : encontrados) {
-                                System.out.println(c.getNombre() + " - " + c.getTelefono() + " - " + c.getCorreo() + " - " + c.getDireccion());
+                                mostrarContacto(c);
                             }
                         }
                         break;
+
                     case 3:
                         System.out.print("Correo o teléfono: ");
                         Contacto c2 = agenda.buscarPorDato(sc.nextLine());
                         if (c2 != null)
-                            System.out.println(c2.getNombre() + " - " + c2.getTelefono() + " - " + c2.getCorreo() + " - " + c2.getDireccion());
-                        else System.out.println("No encontrado.");
+                            mostrarContacto(c2);
+                        else
+                            System.out.println("No se encontró ningún contacto con ese dato.");
                         break;
+
                     case 4:
                         System.out.print("Nombre del contacto a editar: ");
                         List<Contacto> editar = agenda.buscarPorNombre(sc.nextLine());
                         if (editar.isEmpty()) {
                             System.out.println("Contacto no encontrado.");
                         } else {
-                            Contacto c3 = editar.get(0); 
+                            Contacto c3 = editar.get(0);
+
+                            // Guardar datos anteriores
+                            String telAntiguo = c3.getTelefono();
+                            String correoAntiguo = c3.getCorreo();
+
                             System.out.print("Nuevo teléfono: ");
                             c3.setTelefono(sc.nextLine());
                             System.out.print("Nuevo correo: ");
                             c3.setCorreo(sc.nextLine());
                             System.out.print("Nueva dirección: ");
                             c3.setDireccion(sc.nextLine());
+
+                            // Actualizar claves del hash
+                            agenda.actualizarIndices(c3, telAntiguo, correoAntiguo);
+
+                            System.out.println("Contacto actualizado correctamente.");
                         }
                         break;
+
                     case 5:
                         System.out.print("Nombre del contacto a eliminar: ");
                         if (agenda.eliminar(sc.nextLine()))
                             System.out.println("Eliminado correctamente.");
-                        else System.out.println("No encontrado.");
+                        else
+                            System.out.println("No se encontró el contacto.");
                         break;
+
                     case 6:
                         Exportador.exportarAArchivo(agenda.obtenerTodos(), "contactos.txt");
                         break;
+
                     case 7:
-                        System.out.println("Saliendo...");
+                        System.out.println("Saliendo del programa...");
                         return;
+
                     case 8:
-                        System.out.println("Contactos ordenados alfabéticamente:");
+                        System.out.println(">> Contactos ordenados alfabéticamente:");
                         agenda.mostrarOrdenadoPorNombre();
                         break;
+
                     default:
                         System.out.println("Opción no válida.");
                 }
+
+                System.out.println("--------------------------------");
+
             } catch (Exception e) {
                 System.out.println("Ocurrió un error: " + e.getMessage());
             }
         }
+    }
+
+    
+    public static void mostrarContacto(Contacto c) {
+        System.out.println("--------------------------------");
+        System.out.println("Nombre   : " + c.getNombre());
+        System.out.println("Teléfono : " + c.getTelefono());
+        System.out.println("Correo   : " + c.getCorreo());
+        System.out.println("Dirección: " + c.getDireccion());
     }
 }
