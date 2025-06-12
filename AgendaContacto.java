@@ -1,7 +1,7 @@
-import java.io.*; 
+import java.io.*;
 import java.util.*;
 
-// menu opciones: 
+// CLASE PRINCIPAL
 public class AgendaContacto {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -121,7 +121,7 @@ public class AgendaContacto {
         }
     }
 
-    
+    // Método auxiliar para imprimir contactos bonito
     public static void mostrarContacto(Contacto c) {
         System.out.println("--------------------------------");
         System.out.println("Nombre   : " + c.getNombre());
@@ -169,7 +169,7 @@ class Contacto {
     }
 }
 
-// CLASE NodoLista enlazada 
+// CLASE NodoLista
 class NodoLista {
     Contacto contacto;
     NodoLista siguiente;
@@ -180,6 +180,79 @@ class NodoLista {
     }
 }
 
+
+
+// CLASE ListaContactos
+class ListaContactos {
+    NodoLista cabeza = null;
+    HashMap<String, Contacto> hashBusqueda = new HashMap<>();
+    ArbolContactos arbol = new ArbolContactos();
+
+    public void agregar(Contacto c) {
+        NodoLista nuevo = new NodoLista(c);
+        nuevo.siguiente = cabeza;
+        cabeza = nuevo;
+        hashBusqueda.put(c.getCorreo(), c);
+        hashBusqueda.put(c.getTelefono(), c);
+        arbol.insertar(c);
+    }
+
+    public List<Contacto> buscarPorNombre(String nombreParcial) {
+        List<Contacto> resultados = new ArrayList<>();
+        NodoLista actual = cabeza;
+        while (actual != null) {
+            if (actual.contacto.getNombre().toLowerCase().contains(nombreParcial.toLowerCase())) {
+                resultados.add(actual.contacto);
+            }
+            actual = actual.siguiente;
+        }
+        return resultados;
+    }
+
+    public Contacto buscarPorDato(String dato) {
+        return hashBusqueda.getOrDefault(dato, null);
+    }
+
+    public boolean eliminar(String nombre) {
+        NodoLista actual = cabeza;
+        NodoLista anterior = null;
+
+        while (actual != null) {
+            if (actual.contacto.getNombre().equalsIgnoreCase(nombre)) {
+                if (anterior == null) cabeza = actual.siguiente;
+                else anterior.siguiente = actual.siguiente;
+                return true;
+            }
+            anterior = actual;
+            actual = actual.siguiente;
+        }
+        return false;
+    }
+
+    public List<Contacto> obtenerTodos() {
+        List<Contacto> lista = new ArrayList<>();
+        NodoLista actual = cabeza;
+        while (actual != null) {
+            lista.add(actual.contacto);
+            actual = actual.siguiente;
+        }
+        return lista;
+    }
+
+    public void mostrarOrdenadoPorNombre() {
+        arbol.inOrden();
+    }
+
+    // NUEVO MÉTODO PARA ACTUALIZAR EL HASHMAP
+    public void actualizarIndices(Contacto contacto, String telefonoAnterior, String correoAnterior) {
+        hashBusqueda.remove(correoAnterior);
+        hashBusqueda.remove(telefonoAnterior);
+        hashBusqueda.put(contacto.getCorreo(), contacto);
+        hashBusqueda.put(contacto.getTelefono(), contacto);
+    }
+}
+
+
 // CLASE NodoArbol
 class NodoArbol {
     Contacto contacto;
@@ -188,6 +261,37 @@ class NodoArbol {
     public NodoArbol(Contacto c) {
         contacto = c;
         izq = der = null;
+    }
+}
+
+// CLASE ArbolContactos
+class ArbolContactos {
+    private NodoArbol raiz = null;
+
+    public void insertar(Contacto c) {
+        raiz = insertarRec(raiz, c);
+    }
+
+    private NodoArbol insertarRec(NodoArbol nodo, Contacto c) {
+        if (nodo == null) return new NodoArbol(c);
+        if (c.getNombre().compareToIgnoreCase(nodo.contacto.getNombre()) < 0)
+            nodo.izq = insertarRec(nodo.izq, c);
+        else
+            nodo.der = insertarRec(nodo.der, c);
+        return nodo;
+    }
+
+    public void inOrden() {
+        inOrdenRec(raiz);
+    }
+
+    private void inOrdenRec(NodoArbol nodo) {
+        if (nodo != null) {
+            inOrdenRec(nodo.izq);
+            Contacto c = nodo.contacto;
+            AgendaContacto.mostrarContacto(c);
+            inOrdenRec(nodo.der);
+        }
     }
 }
 
@@ -212,7 +316,7 @@ class Cifrado {
 }
 
 
-// CLASE Exportador a .txt
+// CLASE Exportador
 class Exportador {
     public static void exportarAArchivo(List<Contacto> contactos, String nombreArchivo) {
         try (FileWriter fw = new FileWriter(nombreArchivo)) {
