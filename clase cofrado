@@ -16,15 +16,3 @@ class Cifrado {
         return res.toString();
     }
 }
-
-// CLASE NodoArbol
-class NodoArbol {
-    Contacto contacto;
-    NodoArbol izq, der;
-
-    public NodoArbol(Contacto c) {
-        contacto = c;
-        izq = der = null;
-    }
-}
-
