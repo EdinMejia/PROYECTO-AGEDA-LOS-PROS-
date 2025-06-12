@@ -1,7 +1,7 @@
-import java.io.*; 
+import java.io.*;
 import java.util.*;
 
-// menu opciones: 
+// CLASE PRINCIPAL
 public class AgendaContacto {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -121,7 +121,7 @@ public class AgendaContacto {
         }
     }
 
-    
+    // Método auxiliar para imprimir contactos bonito
     public static void mostrarContacto(Contacto c) {
         System.out.println("--------------------------------");
         System.out.println("Nombre   : " + c.getNombre());
@@ -130,3 +130,5 @@ public class AgendaContacto {
         System.out.println("Dirección: " + c.getDireccion());
     }
 }
+
+
