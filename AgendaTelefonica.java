@@ -11,21 +11,19 @@ class NodoLista {
     }
 }
 
-// clase exportador a txt 
-class Exportador { // Declaramos la clase llamada Exportador
-        public static void exportarAArchivo(List<Contacto> contactos, String nombreArchivo) {
-            try { // creamos el bloque de codigo 
-                FileWriter fw = new FileWriter(nombreArchivo); // esto crea un objeto FileWriter que creara el archivo .txt
-                for (Contacto c : contactos) {
-                    fw.write("Nombre: " + c.getNombre() +
-                            ", Teléfono: " + c.getTelefono() +
-                            ", Correo: " + c.getCorreo() +
-                            ", Dirección: " + c.getDireccion() + "\n");
-                }
-                fw.close(); // cerramos el archibo 
-                System.out.println("Exportación exitosa a " + nombreArchivo);
-            } catch (IOException e) { // si no se culple el bloque anterior se ejecuta este 
-                System.out.println("Error al exportar: " + e.getMessage());
+// CLASE Exportador a .txt
+class Exportador {
+    public static void exportarAArchivo(List<Contacto> contactos, String nombreArchivo) {
+        try (FileWriter fw = new FileWriter(nombreArchivo)) {
+            for (Contacto c : contactos) {
+                fw.write("Nombre: " + c.getNombre() +
+                         ", Teléfono: " + c.getTelefono() +
+                         ", Correo: " + c.getCorreo() +
+                         ", Dirección: " + c.getDireccion() + "\n");
             }
+            System.out.println("Exportación exitosa a '" + nombreArchivo + "'");
+        } catch (IOException e) {
+            System.out.println("Error al exportar: " + e.getMessage());
         }
     }
+}
