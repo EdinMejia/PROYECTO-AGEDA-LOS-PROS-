@@ -1,13 +1,13 @@
 import java.io.*; 
 import java.util.*;
-// clase no nodo de lista enlazada 
-class Nodo_de_lista_enlazada {// Declaramos la clase Nodo_de_lista_enlazada
-    Contacto contacto;        // guardamos el contacto 
-    Nodo_de_lista_enlazada siguiente;
+// CLASE NodoLista enlazada 
+class NodoLista {
+    Contacto contacto;
+    NodoLista siguiente;
 
-    public Nodo_de_lista_enlazada(Contacto contacto) {
-        contacto = contacto;  // asigna el contacto al nodo 
-        siguiente = null;     
+    public NodoLista(Contacto c) {
+        contacto = c;
+        siguiente = null;
     }
 }
 
